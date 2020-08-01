@@ -99,11 +99,12 @@ void __tasklet_schedule(struct tasklet_struct *t)
 >>kernel/sofirq.c
 
 tasklet_action()被执行是有ksoftirqd()的内核线程,周期的遍历软中断的向量列表
+
 static __latent_entropy void tasklet_action(struct softirq_action *a)
 {
 	struct tasklet_struct *list;
 
-	local_irq_disable();
+	local_irq_disable();//禁止本地中断传递
 	list = __this_cpu_read(tasklet_vec.head);//得到当前处理器上的tasklet链表tasklet_vec或者tasklet_hi_vec
 	__this_cpu_write(tasklet_vec.head, NULL);//将当前处理器上的该链表设置为NULL, 达到清空的效果。
 	__this_cpu_write(tasklet_vec.tail, this_cpu_ptr(&tasklet_vec.head));
