@@ -3,7 +3,7 @@ uboot目的是启动内核
 	1 初始化时钟 关闭看门狗
 	2 初始化SDram
 	3 启动内核
-<1> 分析配置过程 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_ca9x4_defconfig
+<1> 分析配置过程     make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- vexpress_ca9x4_defconfig
 <2> 配置流程         make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig
 <2> 分析编译         make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -j8
 
