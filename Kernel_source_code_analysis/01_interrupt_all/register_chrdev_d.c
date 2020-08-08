@@ -48,6 +48,29 @@ out2:
  	 return err;
 }
 
+
+int cdev_add(struct cdev *p, dev_t dev, unsigned count)
+{
+	int error;
+
+	p->dev = dev;
+	p->count = count;
+/*
+kobj_map() 函数就是用来把字符设备编号和 cdev 结构变量一起保存到 cdev_map 这个散列表里。
+当后续要打开一个字符设备文件时，通过调用 kobj_lookup() 函数，
+根据设备编号就可以找到 cdev 结构变量，从而取出其中的 ops 字
+
+*/
+	error = kobj_map(cdev_map, dev, count, NULL,
+			 exact_match, exact_lock, p);
+	if (error)
+		return error;
+
+	kobject_get(p->kobj.parent);
+
+	return 0;
+}
+
   
 
 cdev_del()
